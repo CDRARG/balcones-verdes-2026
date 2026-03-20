@@ -1,154 +1,294 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Balcones Verdes y Nativos | Semana del Árbol & Club de Roma</title>
+    <title>Balcones Verdes | Semana del Árbol & Club de Roma</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #fdfbf7; color: #1a2b22; scroll-behavior: smooth; }
-        h1, h2, h3, .brand { font-family: 'Playfair Display', serif; }
-        #map { height: 550px; width: 100%; border-radius: 4px; z-index: 1; background: #e5e7eb; }
-        .hero-overlay { background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.3)); }
-        .bg-nativa { background-color: #1a2b22; }
+        body { font-family: 'Outfit', sans-serif; background-color: #fcfaf8; color: #2d3748; }
+        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+        .hero-gradient { background: linear-gradient(180deg, rgba(20,40,25,0.7) 0%, rgba(20,40,25,0.9) 100%); }
+        /* Altura forzada del mapa para que NUNCA se vea gris o colapse */
+        #map { height: 500px; width: 100%; z-index: 10; border-radius: 0.5rem; border: 1px solid #e2e8f0; }
+        .btn-primary { background-color: #1b4332; color: white; transition: all 0.3s; }
+        .btn-primary:hover { background-color: #081c15; transform: translateY(-2px); }
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <nav class="py-6 px-10 flex justify-between items-center bg-[#fdfbf7]/90 backdrop-blur-sm border-b border-stone-200 sticky top-0 z-50">
-        <div class="brand text-xl tracking-tighter">
-            Balcones <span class="italic font-light text-green-800">Verdes & Nativos</span>
+    <nav class="sticky top-0 z-50 bg-[#fcfaf8]/90 backdrop-blur-md border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+        <div class="serif text-2xl text-[#1b4332] font-semibold tracking-tight">
+            Balcones <span class="italic font-light text-[#2d6a4f]">Verdes</span>
         </div>
-        <div class="hidden md:flex space-x-8 text-[10px] uppercase tracking-[0.2em] font-bold text-stone-400">
-            <a href="#proyecto" class="hover:text-green-800 transition">El Proyecto</a>
-            <a href="#mapa" class="hover:text-green-800 transition">Corredores</a>
-            <a href="#inscripcion" class="text-green-800 border-b border-green-800 pb-1">Participar</a>
+        <div class="hidden md:flex gap-8 text-xs uppercase tracking-widest font-semibold text-gray-500">
+            <a href="#proyecto" class="hover:text-[#1b4332] transition">El Proyecto</a>
+            <a href="#mapa-seccion" class="hover:text-[#1b4332] transition">Mapa Vivo</a>
+            <a href="#inscripcion" class="text-[#1b4332] border-b-2 border-[#1b4332] pb-1">Inscribir Balcón</a>
         </div>
     </nav>
 
-    <section class="relative h-[60vh] flex items-center overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover" alt="Balcón nativo">
-        <div class="absolute inset-0 hero-overlay"></div>
-        <div class="container mx-auto px-10 relative z-10 text-white">
-            <h1 class="text-6xl mb-4 leading-[0.9] tracking-tighter">Regenerá la <br> <span class="italic font-light">Biodiversidad.</span></h1>
-            <p class="text-xl font-light max-w-2xl opacity-90">Sumate a la red de biocorredores urbanos de Buenos Aires.</p>
+    <section class="relative h-[70vh] flex items-center justify-center overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover" alt="Balcón verde">
+        <div class="absolute inset-0 hero-gradient"></div>
+        <div class="relative z-10 text-center text-white px-4 max-w-4xl">
+            <span class="text-xs uppercase tracking-[0.4em] font-bold opacity-80 mb-6 block">Edición 2026 • CABA & GBA</span>
+            <h1 class="text-5xl md:text-7xl mb-6 leading-tight">Regenerá la <br><span class="italic font-light text-[#95d5b2]">Biodiversidad Urbana</span></h1>
+            <p class="text-lg md:text-xl font-light opacity-90 max-w-2xl mx-auto">Tu balcón es una pieza clave para mitigar la isla de calor y crear biocorredores para nuestra fauna nativa.</p>
         </div>
     </section>
 
-    <section id="mapa" class="py-24 bg-white">
-        <div class="container mx-auto px-10">
-            <div class="text-center mb-10">
-                <h2 class="text-4xl mb-2 italic text-[#1a2b22]">Mapa Vivo de Oasis</h2>
-                <p class="text-stone-500 text-sm">Los puntos tardan 5-10 min en aparecer tras la inscripción.</p>
+    <section id="proyecto" class="py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="serif text-4xl text-[#1b4332] mb-4">Plantas Aliadas</h2>
+                <p class="text-gray-500">Especies nativas recomendadas para atraer aves y mariposas en la ecorregión.</p>
             </div>
-            <div id="map" class="shadow-2xl"></div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="group rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt="Pasionaria">
+                    </div>
+                    <div class="p-6 bg-white">
+                        <h3 class="serif text-2xl mb-1 text-[#1b4332]">Pasionaria</h3>
+                        <p class="text-xs text-[#2d6a4f] uppercase tracking-wider mb-3">Passiflora caerulea</p>
+                        <p class="text-gray-600 text-sm">Trepadora fundamental. Es la planta hospedera principal de la mariposa Espejitos (Agraulis vanillae).</p>
+                    </div>
+                </div>
+                <div class="group rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1611354316315-992323cc94d1?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt="Salvia">
+                    </div>
+                    <div class="p-6 bg-white">
+                        <h3 class="serif text-2xl mb-1 text-[#1b4332]">Salvia Guaranítica</h3>
+                        <p class="text-xs text-[#2d6a4f] uppercase tracking-wider mb-3">Salvia guaranitica</p>
+                        <p class="text-gray-600 text-sm">Sus flores tubulares de color azul intenso son un imán natural e irresistible para los colibríes locales.</p>
+                    </div>
+                </div>
+                <div class="group rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1621274220336-7bbef118ac42?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt="Lantana nativa">
+                    </div>
+                    <div class="p-6 bg-white">
+                        <h3 class="serif text-2xl mb-1 text-[#1b4332]">Lantana Nativa</h3>
+                        <p class="text-xs text-[#2d6a4f] uppercase tracking-wider mb-3">Lantana megapotamica</p>
+                        <p class="text-gray-600 text-sm">Arbusto nectarífero por excelencia. Brinda alimento a una gran diversidad de mariposas adultas e insectos benéficos.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="inscripcion" class="py-24 bg-[#fdfbf7]">
-        <div class="container mx-auto px-10 max-w-4xl">
-            <div class="bg-white border border-stone-200 p-8 md:p-16 shadow-sm">
-                <h2 class="text-4xl mb-12 italic text-center text-[#1a2b22]">Inscribí tu Balcón</h2>
-                <form id="formInscripcion" class="space-y-8">
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <input type="text" id="nombreInput" placeholder="Tu nombre" class="w-full p-4 border-b border-stone-200 focus:outline-none focus:border-green-800 italic" required>
-                        <input type="text" id="ubicacionInput" placeholder="Dirección (Ej: Vera 24, CABA)" class="w-full p-4 border-b border-stone-200 focus:outline-none focus:border-green-800 italic" required>
-                    </div>
-                    <input type="text" id="especiesInput" placeholder="¿Qué especies tenés? (Ej: Salvia, Pasionaria)" class="w-full p-4 border-b border-stone-200 focus:outline-none focus:border-green-800 italic">
-                    
-                    <div class="border-2 border-dashed border-stone-100 p-8 text-center rounded">
-                        <label class="block text-[10px] uppercase font-bold text-stone-400 mb-2">Foto del Balcón (Máx 2MB)</label>
-                        <input type="file" id="fotoInput" accept="image/*" class="text-xs text-stone-400">
+    <section id="mapa-seccion" class="py-20 bg-[#f8fafc] border-y border-gray-200">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="text-center mb-10">
+                <h2 class="serif text-4xl text-[#1b4332] mb-3">Red de Biocorredores</h2>
+                <p class="text-gray-500 text-sm">Los puntos se actualizan unos minutos después de cada inscripción exitosa.</p>
+            </div>
+            <div id="map" class="shadow-lg"></div>
+        </div>
+    </section>
+
+    <section id="inscripcion" class="py-24 bg-white">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <div class="bg-[#fcfaf8] border border-gray-200 rounded-2xl p-8 md:p-12 shadow-xl">
+                <div class="text-center mb-10">
+                    <h2 class="serif text-3xl text-[#1b4332] mb-2">Inscribí tu Oasis</h2>
+                    <p class="text-xs uppercase tracking-widest text-gray-500">Concurso Balcones Verdes 2026</p>
+                </div>
+
+                <form id="formInscripcion" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs uppercase font-bold text-gray-600 mb-2">Nombre y Apellido</label>
+                            <input type="text" id="nombreInput" required class="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#1b4332] focus:border-transparent outline-none bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase font-bold text-gray-600 mb-2">Dirección Exacta</label>
+                            <input type="text" id="ubicacionInput" placeholder="Ej: Vera 24, CABA" required class="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#1b4332] focus:border-transparent outline-none bg-white">
+                        </div>
                     </div>
 
-                    <button type="submit" id="btnEnviar" class="w-full bg-[#1a2b22] text-white py-6 text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-green-900 transition">
-                        Enviar Inscripción
+                    <div>
+                        <label class="block text-xs uppercase font-bold text-gray-600 mb-4">Especies en tu balcón</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <label class="flex items-center space-x-2 text-sm cursor-pointer"><input type="checkbox" name="especie" value="Salvia" class="accent-[#1b4332] w-4 h-4"> <span>Salvia</span></label>
+                            <label class="flex items-center space-x-2 text-sm cursor-pointer"><input type="checkbox" name="especie" value="Pasionaria" class="accent-[#1b4332] w-4 h-4"> <span>Pasionaria</span></label>
+                            <label class="flex items-center space-x-2 text-sm cursor-pointer"><input type="checkbox" name="especie" value="Chilca" class="accent-[#1b4332] w-4 h-4"> <span>Chilca</span></label>
+                            <label class="flex items-center space-x-2 text-sm cursor-pointer"><input type="checkbox" name="especie" value="Lantana" class="accent-[#1b4332] w-4 h-4"> <span>Lantana</span></label>
+                            <label class="flex items-center space-x-2 text-sm cursor-pointer"><input type="checkbox" name="especie" value="Otras Nativas" class="accent-[#1b4332] w-4 h-4"> <span>Otras</span></label>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <label class="block text-xs uppercase font-bold text-gray-600 mb-2">Foto del Balcón (Obligatoria)</label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-white">
+                            <input type="file" id="fotoInput" accept="image/*" required class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#e8f5e9] file:text-[#1b4332] hover:file:bg-[#c8e6c9]">
+                            <p class="text-xs text-gray-400 mt-2">Formatos JPG o PNG. Tamaño máximo 2MB.</p>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btnEnviar" class="w-full btn-primary py-5 rounded-lg text-sm uppercase tracking-widest font-bold mt-6 shadow-md flex justify-center items-center">
+                        <span id="btnText">Enviar Inscripción Oficial</span>
                     </button>
                 </form>
             </div>
         </div>
     </section>
 
+    <footer class="py-10 bg-[#1b4332] text-white text-center">
+        <p class="text-xs uppercase tracking-widest opacity-80">Club de Roma • Semana del Árbol</p>
+        <p class="text-[10px] opacity-60 mt-2">Buenos Aires, Argentina | 2026</p>
+    </footer>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <script>
-        // --- CONFIGURACIÓN (REVISÁ QUE ESTOS LINKS SEAN CORRECTOS) ---
+        // ==========================================
+        // CONFIGURACIÓN DE LINKS (NO TOCAR SI ESTÁN BIEN)
+        // ==========================================
+        
+        // El link correcto del CSV (con output=csv)
         const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTRlJp60yfSmHX_iRFaEN2UUEE9RJWDbrwiDtB7zULooQChUzYPM2d7VcWF_jzFW9PcUKpuK60aEM-y/pub?gid=0&single=true&output=csv";
+        
+        // Tu último link del Apps Script
         const urlScript = "https://script.google.com/macros/s/AKfycbwv6FGbUWNwo6acJl_epBvdn1VVShyWA-j4KKmxu3He6WJwIYhrj1q9xhuTHW3HGLk4bg/exec";
 
-        // --- INICIALIZAR MAPA ---
-        var map = L.map('map').setView([-34.6037, -58.3816], 12);
+        // ==========================================
+        // 1. INICIALIZAR EL MAPA (OpenStreetMap - No falla)
+        // ==========================================
+        var map = L.map('map').setView([-34.6037, -58.3816], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
+            attribution: '&copy; OpenStreetMap contributors',
+            maxZoom: 19
         }).addTo(map);
 
-        // --- CARGAR PUNTOS ---
-        async function cargarPuntos() {
+        // ==========================================
+        // 2. CARGAR PUNTOS DESDE EL GOOGLE SHEET
+        // ==========================================
+        async function cargarMapa() {
             try {
-                const res = await fetch(csvUrl);
-                const csvText = await res.text();
-                const lineas = csvText.split("\n").slice(1);
-                lineas.forEach(linea => {
-                    const col = linea.split(",");
-                    if (col.length >= 7 && !isNaN(col[5]) && !isNaN(col[6])) {
-                        L.marker([parseFloat(col[5]), parseFloat(col[6])])
-                         .addTo(map)
-                         .bindPopup(`<b>${col[0]}</b><br>${col[2]}`);
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                
+                // Procesar el CSV
+                const filas = data.split("\n").slice(1); // Ignora la fila 1 (títulos)
+
+                filas.forEach(fila => {
+                    // Manejo básico por si hay comas dentro del texto
+                    const columnas = fila.split(",");
+                    if (columnas.length >= 7) { 
+                        // Según tu script: [0]Nombre, [1]Ubic, [2]Especies, [3]Foto, [4]Fecha, [5]Lat, [6]Lon
+                        const nombre = columnas[0];
+                        const especies = columnas[2];
+                        const lat = parseFloat(columnas[5]);
+                        const lon = parseFloat(columnas[6]);
+
+                        // Verificar que las coordenadas sean números válidos antes de dibujar
+                        if (!isNaN(lat) && !isNaN(lon)) {
+                            L.marker([lat, lon]).addTo(map)
+                             .bindPopup(`<strong style="color:#1b4332; font-family:serif; font-size:16px;">${nombre}</strong><br><span style="font-size:12px; color:#666;">Especies: ${especies}</span>`);
+                        }
                     }
                 });
-            } catch (err) { console.error("Error cargando puntos", err); }
+            } catch (error) { 
+                console.error("El mapa aún no tiene datos o Google está actualizando el CSV.", error); 
+            }
         }
-        cargarPuntos();
+        cargarMapa();
 
-        // --- PROCESAR ENVÍO ---
+        // ==========================================
+        // 3. LÓGICA DE ENVÍO Y FOTO
+        // ==========================================
         document.getElementById('formInscripcion').onsubmit = async function(e) {
-            e.preventDefault();
+            e.preventDefault(); // Evita que la página se recargue sola
+            
+            // UI: Avisar que está cargando
             const btn = document.getElementById('btnEnviar');
-            btn.innerText = "ENVIANDO...";
+            const btnText = document.getElementById('btnText');
             btn.disabled = true;
-
-            const nombre = document.getElementById('nombreInput').value;
-            const ubicacion = document.getElementById('ubicacionInput').value;
-            const especies = document.getElementById('especiesInput').value;
-            const fotoFile = document.getElementById('fotoInput').files[0];
+            btnText.innerText = "Procesando foto y enviando... Aguardá.";
+            btn.style.opacity = "0.7";
 
             try {
-                // 1. Geolocalización
-                const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(ubicacion + ", Buenos Aires")}`);
-                const geoData = await geoRes.json();
-                const lat = geoData.length > 0 ? geoData[0].lat : -34.60;
-                const lon = geoData.length > 0 ? geoData[0].lon : -58.38;
+                // Recolectar datos de texto
+                const nombre = document.getElementById('nombreInput').value;
+                const ubicacion = document.getElementById('ubicacionInput').value;
+                
+                // Recolectar checkboxes
+                const seleccionados = document.querySelectorAll('input[name="especie"]:checked');
+                const especies = Array.from(seleccionados).map(cb => cb.value).join(", ");
 
-                // 2. Procesar Foto a Base64
+                // A. Buscar Coordenadas de la dirección (Nominatim OpenStreetMap)
+                let lat = -34.6037, lon = -58.3816; // Obelisco por defecto
+                try {
+                    const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(ubicacion + ", Buenos Aires, Argentina")}`);
+                    const geoData = await geoRes.json();
+                    if (geoData.length > 0) {
+                        lat = parseFloat(geoData[0].lat);
+                        lon = parseFloat(geoData[0].lon);
+                    }
+                } catch (geoErr) { console.log("No se pudo geolocalizar, se usará punto central."); }
+
+                // B. Procesar la Foto a Base64 para Google Drive
+                const archivoInput = document.getElementById('fotoInput').files[0];
                 let archivoBase64 = "Sin foto";
-                if (fotoFile) {
-                    const reader = new FileReader();
-                    archivoBase64 = await new Promise(resolve => {
-                        reader.onload = () => resolve(reader.result.split(',')[1]);
-                        reader.readAsDataURL(fotoFile);
+                let mimeType = "";
+
+                if (archivoInput) {
+                    mimeType = archivoInput.type;
+                    archivoBase64 = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            // Extraemos solo la parte del código (después de la coma)
+                            const base64String = reader.result.split(',')[1];
+                            resolve(base64String);
+                        };
+                        reader.onerror = reject;
+                        reader.readAsDataURL(archivoInput);
                     });
                 }
 
-                // 3. Enviar a Google
-                const payload = {
-                    nombre, ubicacion, especies, lat, lon,
+                // C. Armar el paquete de datos para Apps Script
+                const datos = { 
+                    nombre: nombre, 
+                    ubicacion: ubicacion, 
+                    especies: especies || "Ninguna especificada", 
+                    lat: lat, 
+                    lon: lon, 
                     archivo: archivoBase64,
-                    mimetype: fotoFile ? fotoFile.type : ""
+                    mimetype: mimeType
                 };
 
+                // D. Enviar a Google Apps Script
                 await fetch(urlScript, {
                     method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify(payload)
+                    mode: 'no-cors', // Fundamental para evitar bloqueos de seguridad del navegador
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(datos)
                 });
 
-                alert("¡Inscripción Exitosa! Los puntos en el mapa tardan unos minutos en aparecer.");
-                location.reload();
-            } catch (err) {
-                alert("Error en el envío. Reintentá.");
-                btn.innerText = "ENVIAR INSCRIPCIÓN";
+                // E. Éxito
+                alert("¡Inscripción exitosa! 🎉\nTu foto se envió correctamente. El punto aparecerá en el mapa en unos 5 a 10 minutos (tiempo de actualización de Google).");
+                
+                // Limpiar formulario y resetear botón
+                document.getElementById('formInscripcion').reset();
+                btnText.innerText = "Enviar Inscripción Oficial";
                 btn.disabled = false;
+                btn.style.opacity = "1";
+                
+                // Llevar la pantalla al mapa
+                document.getElementById('mapa-seccion').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error(error);
+                alert("Hubo un problema al enviar. Verificá tu conexión o intentá subir una foto más liviana.");
+                btnText.innerText = "Reintentar Envío";
+                btn.disabled = false;
+                btn.style.opacity = "1";
             }
         };
     </script>
