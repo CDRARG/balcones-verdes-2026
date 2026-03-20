@@ -10,11 +10,9 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #fdfbf7; color: #1a2b22; scroll-behavior: smooth; }
         h1, h2, h3, .brand { font-family: 'Playfair Display', serif; }
-        #map { height: 550px; width: 100%; border-radius: 4px; z-index: 1; }
+        #map { height: 550px; width: 100%; border-radius: 4px; z-index: 1; background: #e5e7eb; }
         .hero-overlay { background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.3)); }
         .bg-nativa { background-color: #1a2b22; }
-        .card-species:hover img { transform: scale(1.05); transition: 0.6s; }
-        input[type="checkbox"] { accent-color: #2d4639; }
     </style>
 </head>
 <body>
@@ -26,146 +24,46 @@
         <div class="hidden md:flex space-x-8 text-[10px] uppercase tracking-[0.2em] font-bold text-stone-400">
             <a href="#proyecto" class="hover:text-green-800 transition">El Proyecto</a>
             <a href="#mapa" class="hover:text-green-800 transition">Corredores</a>
-            <a href="#especies" class="hover:text-green-800 transition">Especies</a>
             <a href="#inscripcion" class="text-green-800 border-b border-green-800 pb-1">Participar</a>
         </div>
     </nav>
 
-    <section class="relative h-[85vh] flex items-center overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover" alt="Balcón denso con vegetación nativa">
+    <section class="relative h-[60vh] flex items-center overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover" alt="Balcón nativo">
         <div class="absolute inset-0 hero-overlay"></div>
-        <div class="container mx-auto px-10 relative z-10 text-white max-w-5xl">
-            <span class="uppercase text-[10px] tracking-[0.4em] mb-4 block font-bold opacity-80 text-white">Edición 2026 | CABA & Conurbano [cite: 8]</span>
-            <h1 class="text-6xl md:text-8xl mb-8 leading-[0.9] tracking-tighter">Regenerá la <br> <span class="italic font-light">Biodiversidad.</span></h1>
-            <p class="text-xl font-light max-w-2xl opacity-90 leading-relaxed mb-10 text-white">
-                Tu balcón puede ser un oasis de vida. Sumate a la red de biocorredores urbanos y combatí el efecto isla de calor. [cite: 15, 25]
-            </p>
-            <div class="flex space-x-12">
-                <div class="border-l border-green-500 pl-4">
-                    <p class="text-[10px] uppercase tracking-widest opacity-60 text-white">Fondo de Premios [cite: 81]</p>
-                    <p class="text-3xl font-serif italic text-white">$1.600.000 [cite: 88]</p>
-                </div>
-            </div>
+        <div class="container mx-auto px-10 relative z-10 text-white">
+            <h1 class="text-6xl mb-4 leading-[0.9] tracking-tighter">Regenerá la <br> <span class="italic font-light">Biodiversidad.</span></h1>
+            <p class="text-xl font-light max-w-2xl opacity-90">Sumate a la red de biocorredores urbanos de Buenos Aires.</p>
         </div>
     </section>
 
-    <section id="proyecto" class="py-24 container mx-auto px-10">
-        <div class="grid md:grid-cols-2 gap-20 items-center">
-            <div>
-                <h2 class="text-5xl mb-8 leading-tight italic">Un llamado a la acción ciudadana. [cite: 16]</h2>
-                <p class="text-stone-600 leading-relaxed mb-6">
-                    Buscamos que cada balcón sea un eslabón vital de un corredor biológico emergente, ofreciendo refugio y recursos a la fauna local (aves y polinizadores). [cite: 14, 15]
-                </p>
-                <ul class="space-y-4 text-sm text-stone-500 italic">
-                    <li class="flex items-center"><span class="w-2 h-2 bg-green-800 rounded-full mr-3"></span> Promover biocorredores con plantas nativas. [cite: 23]</li>
-                    <li class="flex items-center"><span class="w-2 h-2 bg-green-800 rounded-full mr-3"></span> Mitigar las temperaturas urbanas (Isla de Calor). [cite: 26]</li>
-                    <li class="flex items-center"><span class="w-2 h-2 bg-green-800 rounded-full mr-3"></span> Educación y participación comunitaria. [cite: 27, 28]</li>
-                </ul>
-            </div>
-            <div class="bg-stone-100 p-12 border border-stone-200">
-                <h3 class="text-2xl mb-6">Premios del Concurso [cite: 81, 87]</h3>
-                <div class="space-y-6">
-                    <div class="flex justify-between border-b border-stone-300 pb-2">
-                        <span>🥇 1º Puesto</span>
-                        <span class="font-bold">$800.000 [cite: 88]</span>
-                    </div>
-                    <div class="flex justify-between border-b border-stone-300 pb-2">
-                        <span>🥈 2º Puesto</span>
-                        <span class="font-bold">$500.000 [cite: 88]</span>
-                    </div>
-                    <div class="flex justify-between border-b border-stone-300 pb-2">
-                        <span>🥉 3º Puesto</span>
-                        <span class="font-bold">$300.000 [cite: 88]</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="mapa" class="py-24 bg-white border-y border-stone-200">
+    <section id="mapa" class="py-24 bg-white">
         <div class="container mx-auto px-10">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="text-4xl mb-4 italic">Mapa Vivo de Biodiversidad [cite: 67]</h2>
-                <p class="text-stone-500 text-sm">Explorá los oasis registrados y visualizá cómo se conectan los corredores biológicos. [cite: 73]</p>
+            <div class="text-center mb-10">
+                <h2 class="text-4xl mb-2 italic text-[#1a2b22]">Mapa Vivo de Oasis</h2>
+                <p class="text-stone-500 text-sm">Los puntos tardan 5-10 min en aparecer tras la inscripción.</p>
             </div>
-            <div id="map" class="shadow-2xl grayscale-[20%]"></div>
-        </div>
-    </section>
-
-    <section id="especies" class="py-24 bg-nativa text-stone-100">
-        <div class="container mx-auto px-10">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
-                <h2 class="text-5xl italic font-light">Especies Aliadas [cite: 54]</h2>
-                <p class="text-stone-400 text-[10px] uppercase tracking-widest font-bold mt-4 md:mt-0">Nativas de Buenos Aires [cite: 23]</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-12">
-                <div class="card-species group">
-                    <div class="aspect-[3/4] overflow-hidden mb-6">
-                        <img src="https://images.unsplash.com/photo-1508193638397-1c4234db14d8?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition" alt="Salvia">
-                    </div>
-                    <h3 class="text-2xl italic mb-2">Salvia guaranitica</h3>
-                    <p class="text-stone-400 text-sm leading-relaxed mb-4">Atrae colibríes y mariposas nectaríferas. [cite: 55]</p>
-                    <span class="text-[10px] bg-white/10 px-3 py-1 uppercase tracking-widest">Nectarífera</span>
-                </div>
-                <div class="card-species group">
-                    <div class="aspect-[3/4] overflow-hidden mb-6">
-                        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition" alt="Pasionaria">
-                    </div>
-                    <h3 class="text-2xl italic mb-2">Pasionaria</h3>
-                    <p class="text-stone-400 text-sm leading-relaxed mb-4">Planta hospedera de la Mariposa Espejitos. [cite: 55]</p>
-                    <span class="text-[10px] bg-white/10 px-3 py-1 uppercase tracking-widest">Hospedera</span>
-                </div>
-                <div class="card-species group">
-                    <div class="aspect-[3/4] overflow-hidden mb-6">
-                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition" alt="Chilca">
-                    </div>
-                    <h3 class="text-2xl italic mb-2">Chilca Arbustiva</h3>
-                    <p class="text-stone-400 text-sm leading-relaxed mb-4">Provee refugio y alimento a insectos benéficos. [cite: 55]</p>
-                    <span class="text-[10px] bg-white/10 px-3 py-1 uppercase tracking-widest">Refugio</span>
-                </div>
-            </div>
+            <div id="map" class="shadow-2xl"></div>
         </div>
     </section>
 
     <section id="inscripcion" class="py-24 bg-[#fdfbf7]">
         <div class="container mx-auto px-10 max-w-4xl">
-            <div class="bg-white border border-stone-200 p-16 shadow-sm">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl mb-4 italic text-[#1a2b22]">Inscribí tu Balcón [cite: 33]</h2>
-                    <p class="text-stone-400 text-[10px] uppercase tracking-[0.3em] font-bold">Sumate al Corredor Biológico</p>
-                </div>
-
-                <form id="formInscripcion" class="space-y-12">
-                    <div class="grid md:grid-cols-2 gap-10">
-                        <div>
-                            <label class="block text-[10px] uppercase tracking-widest font-bold text-stone-400 mb-4">Nombre Completo</label>
-                            <input type="text" id="nombreInput" class="w-full p-4 border-b border-stone-200 focus:outline-none focus:border-green-800 text-sm italic" required>
-                        </div>
-                        <div>
-                            <label class="block text-[10px] uppercase tracking-widest font-bold text-stone-400 mb-4">Ubicación (Dirección Exacta) [cite: 67]</label>
-                            <input type="text" id="ubicacionInput" placeholder="CABA / GBA" class="w-full p-4 border-b border-stone-200 focus:outline-none focus:border-green-800 text-sm italic" required>
-                        </div>
+            <div class="bg-white border border-stone-200 p-8 md:p-16 shadow-sm">
+                <h2 class="text-4xl mb-12 italic text-center text-[#1a2b22]">Inscribí tu Balcón</h2>
+                <form id="formInscripcion" class="space-y-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <input type="text" id="nombreInput" placeholder="Tu nombre" class="w-full p-4 border-b border-stone-200 focus:outline-none focus:border-green-800 italic" required>
+                        <input type="text" id="ubicacionInput" placeholder="Dirección (Ej: Vera 24, CABA)" class="w-full p-4 border-b border-stone-200 focus:outline-none focus:border-green-800 italic" required>
+                    </div>
+                    <input type="text" id="especiesInput" placeholder="¿Qué especies tenés? (Ej: Salvia, Pasionaria)" class="w-full p-4 border-b border-stone-200 focus:outline-none focus:border-green-800 italic">
+                    
+                    <div class="border-2 border-dashed border-stone-100 p-8 text-center rounded">
+                        <label class="block text-[10px] uppercase font-bold text-stone-400 mb-2">Foto del Balcón (Máx 2MB)</label>
+                        <input type="file" id="fotoInput" accept="image/*" class="text-xs text-stone-400">
                     </div>
 
-                    <div>
-                        <label class="block text-[10px] uppercase tracking-widest font-bold text-stone-400 mb-6 text-center">Ecorregión / Especies [cite: 23]</label>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                            <label class="flex items-center space-x-3 text-xs text-stone-600 cursor-pointer"><input type="checkbox" name="especie" value="Salvia"> <span>Salvia</span></label>
-                            <label class="flex items-center space-x-3 text-xs text-stone-600 cursor-pointer"><input type="checkbox" name="especie" value="Pasionaria"> <span>Pasionaria</span></label>
-                            <label class="flex items-center space-x-3 text-xs text-stone-600 cursor-pointer"><input type="checkbox" name="especie" value="Chilca"> <span>Chilca</span></label>
-                            <label class="flex items-center space-x-3 text-xs text-stone-600 cursor-pointer"><input type="checkbox" name="especie" value="Lantana"> <span>Lantana</span></label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-[10px] uppercase tracking-widest font-bold text-stone-400 mb-4">Registro Fotográfico [cite: 37]</label>
-                        <div class="border-2 border-dashed border-stone-100 p-8 text-center rounded">
-                            <input type="file" id="fotoInput" class="text-xs text-stone-400">
-                            <p class="text-[9px] text-stone-400 mt-2 italic">Subí tu foto inicial para el jurado [cite: 39]</p>
-                        </div>
-                    </div>
-
-                    <button type="button" id="btnEnviar" class="w-full bg-[#1a2b22] text-white py-6 text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-green-900 transition shadow-2xl">
+                    <button type="submit" id="btnEnviar" class="w-full bg-[#1a2b22] text-white py-6 text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-green-900 transition">
                         Enviar Inscripción
                     </button>
                 </form>
@@ -173,74 +71,86 @@
         </div>
     </section>
 
-    <footer class="py-20 border-t border-stone-200 bg-white opacity-60">
-        <div class="container mx-auto px-10 text-center">
-            <p class="text-[10px] uppercase tracking-[0.3em] font-bold mb-4">Semana del Árbol • Club de Roma [cite: 94, 95]</p>
-            <p class="text-[9px] tracking-widest">CABA, ARGENTINA [cite: 78]</p>
-        </div>
-    </footer>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // --- CONFIGURACIÓN (REVISÁ QUE ESTOS LINKS SEAN CORRECTOS) ---
+        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTRlJp60yfSmHX_iRFaEN2UUEE9RJWDbrwiDtB7zULooQChUzYPM2d7VcWF_jzFW9PcUKpuK60aEM-y/pub?gid=0&single=true&output=csv";
+        const urlScript = "https://script.google.com/macros/s/AKfycbwv6FGbUWNwo6acJl_epBvdn1VVShyWA-j4KKmxu3He6WJwIYhrj1q9xhuTHW3HGLk4bg/exec";
 
-   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTRlJp60yfSmHX_iRFaEN2UUEE9RJWDbrwiDtB7zULooQChUzYPM2d7VcWF_jzFW9PcUKpuK60aEM-y/pubhtml";
-    const urlScript = "https://script.google.com/macros/s/AKfycbzVkvvIvvKqcJuVFC7RfmDhZmq1MST9xMjHm4udfKCYC0XBn1XFZQs6eDzrLKypqowE/exec";
+        // --- INICIALIZAR MAPA ---
+        var map = L.map('map').setView([-34.6037, -58.3816], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
 
-    var map = L.map('map', { scrollWheelZoom: false }).setView([-34.6037, -58.3816], 12);
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Esri &copy; 2026'
-    }).addTo(map);
-
-    // FUNCIÓN PARA CARGAR PUNTOS DESDE EL EXCEL
-    async function cargarMapa() {
-        try {
-            const response = await fetch(csvUrl);
-            const data = await response.text();
-            const filas = data.split("\n").slice(1); // Ignorar encabezado
-
-            filas.forEach(fila => {
-                const columnas = fila.split(",");
-                if (columnas.length >= 6) { // Asegurarnos que tenga Lat y Lon
-                    const [nombre, ubica, especies, foto, fecha, lat, lon] = columnas;
-                    L.marker([lat, lon]).addTo(map)
-                        .bindPopup(`<b>${nombre}</b><br>Especies: ${especies}`);
-                }
-            });
-        } catch (e) { console.log("Cargando mapa inicial..."); }
-    }
-    cargarMapa();
-
-    // FUNCIÓN DE ENVÍO CON GEOLOCALIZACIÓN
-    document.getElementById('btnEnviar').onclick = async function() {
-        const nombre = document.getElementById('nombreInput').value;
-        const ubicacion = document.getElementById('ubicacionInput').value;
-        const seleccionados = document.querySelectorAll('input[name="especie"]:checked');
-        const especies = Array.from(seleccionados).map(cb => cb.value).join(", ");
-        
-        if (!nombre || !ubicacion) return alert("Completá los datos");
-
-        // "Traductor" de dirección a coordenadas (Nominatim)
-        try {
-            const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(ubicacion + ", Buenos Aires")}`);
-            const geoData = await geoRes.json();
-            
-            let lat = -34.6037, lon = -58.3816; // Default
-            if (geoData.length > 0) {
-                lat = geoData[0].lat;
-                lon = geoData[0].lon;
-            }
-
-            const datos = { nombre, ubicacion, especies, lat, lon, foto: "Link en Drive" };
-
-            await fetch(urlScript, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(datos)
-            });
-
-            alert("¡Oasis registrado! Aparecerá en el mapa en unos minutos.");
-            location.reload(); // Recargar para ver el punto nuevo
-        } catch (e) {
-            alert("Error en el registro.");
+        // --- CARGAR PUNTOS ---
+        async function cargarPuntos() {
+            try {
+                const res = await fetch(csvUrl);
+                const csvText = await res.text();
+                const lineas = csvText.split("\n").slice(1);
+                lineas.forEach(linea => {
+                    const col = linea.split(",");
+                    if (col.length >= 7 && !isNaN(col[5]) && !isNaN(col[6])) {
+                        L.marker([parseFloat(col[5]), parseFloat(col[6])])
+                         .addTo(map)
+                         .bindPopup(`<b>${col[0]}</b><br>${col[2]}`);
+                    }
+                });
+            } catch (err) { console.error("Error cargando puntos", err); }
         }
-    };
-</script>
+        cargarPuntos();
+
+        // --- PROCESAR ENVÍO ---
+        document.getElementById('formInscripcion').onsubmit = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnEnviar');
+            btn.innerText = "ENVIANDO...";
+            btn.disabled = true;
+
+            const nombre = document.getElementById('nombreInput').value;
+            const ubicacion = document.getElementById('ubicacionInput').value;
+            const especies = document.getElementById('especiesInput').value;
+            const fotoFile = document.getElementById('fotoInput').files[0];
+
+            try {
+                // 1. Geolocalización
+                const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(ubicacion + ", Buenos Aires")}`);
+                const geoData = await geoRes.json();
+                const lat = geoData.length > 0 ? geoData[0].lat : -34.60;
+                const lon = geoData.length > 0 ? geoData[0].lon : -58.38;
+
+                // 2. Procesar Foto a Base64
+                let archivoBase64 = "Sin foto";
+                if (fotoFile) {
+                    const reader = new FileReader();
+                    archivoBase64 = await new Promise(resolve => {
+                        reader.onload = () => resolve(reader.result.split(',')[1]);
+                        reader.readAsDataURL(fotoFile);
+                    });
+                }
+
+                // 3. Enviar a Google
+                const payload = {
+                    nombre, ubicacion, especies, lat, lon,
+                    archivo: archivoBase64,
+                    mimetype: fotoFile ? fotoFile.type : ""
+                };
+
+                await fetch(urlScript, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify(payload)
+                });
+
+                alert("¡Inscripción Exitosa! Los puntos en el mapa tardan unos minutos en aparecer.");
+                location.reload();
+            } catch (err) {
+                alert("Error en el envío. Reintentá.");
+                btn.innerText = "ENVIAR INSCRIPCIÓN";
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>
