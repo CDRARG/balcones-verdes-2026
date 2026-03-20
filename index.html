@@ -180,53 +180,67 @@
         </div>
     </footer>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        // CONFIGURACIÓN DEL MAPA
-        var map = L.map('map', { scrollWheelZoom: false }).setView([-34.6037, -58.3816], 12);
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Esri &copy; 2026', maxZoom: 13
-        }).addTo(map);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png').addTo(map);
+   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    const csvUrl = "TU_LINK_DE_PUBLICAR_EN_LA_WEB_CSV_AQUÍ";
+    const urlScript = "TU_URL_DE_APPS_SCRIPT_AQUÍ";
 
-        // FUNCIÓN DE ENVÍO
-        document.getElementById('btnEnviar').onclick = async function() {
-            const urlScript = "https://script.google.com/macros/s/AKfycbyH0d6DTaChXzEwtwf0dqlQa6Z8T8BCVqX_chvPdLTy8_GvEuIAEFF2P-qTs-H9FOWhpQ/exec";            
-            const nombre = document.getElementById('nombreInput').value;
-            const ubicacion = document.getElementById('ubicacionInput').value;
-            const checkboxes = document.querySelectorAll('input[name="especie"]:checked');
-            const especies = Array.from(checkboxes).map(cb => cb.value).join(", ");
-            const fotoInput = document.getElementById('fotoInput');
+    var map = L.map('map', { scrollWheelZoom: false }).setView([-34.6037, -58.3816], 12);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Esri &copy; 2026'
+    }).addTo(map);
 
-            if (!nombre || !ubicacion) return alert("Por favor, completá nombre y ubicación.");
+    // FUNCIÓN PARA CARGAR PUNTOS DESDE EL EXCEL
+    async function cargarMapa() {
+        try {
+            const response = await fetch(csvUrl);
+            const data = await response.text();
+            const filas = data.split("\n").slice(1); // Ignorar encabezado
 
-            const datos = { 
-                nombre: nombre, 
-                ubicacion: ubicacion, 
-                especies: especies || "Ninguna seleccionada", 
-                foto: fotoInput.files.length > 0 ? "Archivo seleccionado" : "Sin foto"
-            };
+            filas.forEach(fila => {
+                const columnas = fila.split(",");
+                if (columnas.length >= 6) { // Asegurarnos que tenga Lat y Lon
+                    const [nombre, ubica, especies, foto, fecha, lat, lon] = columnas;
+                    L.marker([lat, lon]).addTo(map)
+                        .bindPopup(`<b>${nombre}</b><br>Especies: ${especies}`);
+                }
+            });
+        } catch (e) { console.log("Cargando mapa inicial..."); }
+    }
+    cargarMapa();
 
-            try {
-                // Deshabilitar botón para evitar múltiples envíos
-                this.innerText = "ENVIANDO...";
-                this.disabled = true;
+    // FUNCIÓN DE ENVÍO CON GEOLOCALIZACIÓN
+    document.getElementById('btnEnviar').onclick = async function() {
+        const nombre = document.getElementById('nombreInput').value;
+        const ubicacion = document.getElementById('ubicacionInput').value;
+        const seleccionados = document.querySelectorAll('input[name="especie"]:checked');
+        const especies = Array.from(seleccionados).map(cb => cb.value).join(", ");
+        
+        if (!nombre || !ubicacion) return alert("Completá los datos");
 
-                await fetch(urlScript, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify(datos)
-                });
-                
-                alert("¡Inscripción enviada con éxito! Ya sos parte del corredor biológico.");
-                document.getElementById('formInscripcion').reset();
-            } catch (error) {
-                alert("Error al enviar. Revisá tu conexión.");
-            } finally {
-                this.innerText = "ENVIAR INSCRIPCIÓN";
-                this.disabled = false;
+        // "Traductor" de dirección a coordenadas (Nominatim)
+        try {
+            const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(ubicacion + ", Buenos Aires")}`);
+            const geoData = await geoRes.json();
+            
+            let lat = -34.6037, lon = -58.3816; // Default
+            if (geoData.length > 0) {
+                lat = geoData[0].lat;
+                lon = geoData[0].lon;
             }
-        };
-    </script>
-</body>
-</html>
+
+            const datos = { nombre, ubicacion, especies, lat, lon, foto: "Link en Drive" };
+
+            await fetch(urlScript, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(datos)
+            });
+
+            alert("¡Oasis registrado! Aparecerá en el mapa en unos minutos.");
+            location.reload(); // Recargar para ver el punto nuevo
+        } catch (e) {
+            alert("Error en el registro.");
+        }
+    };
+</script>
